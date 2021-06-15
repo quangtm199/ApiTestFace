@@ -3,7 +3,7 @@ import time
 import os
 import numpy as np
 from network import *
-from pylab import plt
+
 import mxnet as mx
 from util.utility import pad_bbox, square_bbox, py_nms
 
@@ -42,7 +42,7 @@ class MTCNN(object):
             return None
 
         if SHOW_FIGURE:
-            plt.figure()
+           
             tmp = img.copy()
             for i in bboxes:
                 x0 = int(i[0])
@@ -50,8 +50,7 @@ class MTCNN(object):
                 x1 = x0 + int(i[2])
                 y1 = y0 + int(i[3])
                 cv2.rectangle(tmp, (x0, y0), (x1, y1), (0, 0, 255), 2)
-            plt.imshow(tmp[:, :, ::-1])
-            plt.title("pnet result")
+            
 
         # rnet
         if not self.rnet:
@@ -63,7 +62,7 @@ class MTCNN(object):
             return None
 
         if SHOW_FIGURE:
-            plt.figure()
+        
             tmp = img.copy()
             for i in bboxes:
                 x0 = int(i[0])
@@ -71,8 +70,7 @@ class MTCNN(object):
                 x1 = x0 + int(i[2])
                 y1 = y0 + int(i[3])
                 cv2.rectangle(tmp, (x0, y0), (x1, y1), (0, 0, 255), 2)
-            plt.imshow(tmp[:, :, ::-1])
-            plt.title("rnet result")
+       
 
         if not self.onet:
             return bboxes

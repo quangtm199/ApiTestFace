@@ -61,7 +61,7 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
                 rx = min(w, center[0] + 128)
                 ry = min(h, center[1] + 128)
                 face = input_image[ly:ry, lx:rx]
-            cv2.imwrite("face.jpg",face)
+         
             transform = transforms.Compose(
                 [Normaliztion_valtest_image(), ToTensor_valtest_img()])
             img = transform(face)
@@ -88,6 +88,6 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                 cv2.rectangle(input_image, (lx, ly), (rx, ry),
                               (0, 255, 0), 2)
-    cv2.imwrite("input_image.jpg",input_image)
+    # cv2.imwrite("input_image.jpg",input_image)
     input_image = Image.fromarray(np.uint8(input_image)).convert('RGB')
     return input_image
