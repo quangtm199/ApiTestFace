@@ -39,7 +39,7 @@ def read_root():
 #     cv2.imwrite("1.png",img)
 #     return {"filename": file}
 @app.post("/predict")
-async def get_segmentation_map(file: UploadFile = File(...)):
+async def get_predict_image(file: UploadFile = File(...)):
     """Get segmentation maps from image file"""
     image_predict = get_predict(model,face_detector,await file.read())
     bytes_io = io.BytesIO()
