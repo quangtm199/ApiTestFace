@@ -16,6 +16,8 @@ RUN pip3 install pandas
 RUN apt-get update ##[editead]
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN pip3 install -r requirements.txt 
+ENV LC_ALL='C.UTF-8'
+ENV LC_ALL='C.UTF-8'
 COPY . /fastapi/
 EXPOSE 80
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80","--reload"]
