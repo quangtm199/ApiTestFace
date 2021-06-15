@@ -51,12 +51,16 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
     if bboxes is not None:
         count = 0
         for i in bboxes:
-
             lx = max(0,int(i[0]))
             ly = max(0,int(i[1]))
             rx = lx + int(i[2])
             ry = ly + int(i[3])
             face = input_image[ly:ry, lx:rx]
+
+            # cv2.imshow("face", face)
+            # cv2.waitKey()
+            # img1 = cv2.resize(input_image[ly:ry, lx:rx], (256, 256))
+            # cv2.imwrite("2.jpg", img1)
             if face.shape[0] < 256 or face.shape[1] < 256:
                 center = [int(0.5 * (lx + rx)), int(0.5 * (ly + ry))]
                 lx = max(0, center[0] - 128)
@@ -65,7 +69,7 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
                 ry = min(h, center[1] + 128)
                 face = input_image[ly:ry, lx:rx]
             else:
-		face=cv2.resize(face,(256,256))
+                cv2.resize(face, (256, 256))
             transform = transforms.Compose(
                 [Normaliztion_valtest_image(), ToTensor_valtest_img()])
             img = transform(face)
