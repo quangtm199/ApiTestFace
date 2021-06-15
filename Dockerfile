@@ -2,7 +2,7 @@ FROM nvidia/cuda:10.0-base-ubuntu16.04
 CMD nvidia-smi
 RUN apt-get update 
 RUN apt-get install unzip
-RUN apt-get install python3.7
+RUN apt-get install python3
 RUN apt-get install python3-pip
 
 RUN mkdir /fastapi
