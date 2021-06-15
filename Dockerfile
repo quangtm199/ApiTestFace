@@ -2,8 +2,8 @@ FROM nvidia/cuda:10.0-base-ubuntu16.04
 CMD nvidia-smi
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
 RUN apt-get install unzip
-Run apt-get install python3.6
-Run apt-get install python3-pip
+RUN apt-get install python3.6
+RUN apt-get install python3-pip
 
 RUN mkdir /fastapi
 COPY requirements.txt /fastapi
