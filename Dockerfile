@@ -1,7 +1,6 @@
 FROM nvidia/cuda:10.2-base
 CMD nvidia-smi
-RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
-RUN apt-get install unzip
+RUN apt-get update 
 RUN apt-get -y install python3.6
 RUN apt-get -y install python3-pip
 RUN mkdir /fastapi
