@@ -1,14 +1,10 @@
 FROM nvidia/cuda:10.2-base
 CMD nvidia-smi
-RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
-RUN apt-get install unzip
-RUN apt-get -y install python3.6
-RUN apt-get -y install python3-pip
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.6
 RUN mkdir /fastapi
 COPY requirements.txt /fastapi
 WORKDIR /fastapi
 RUN pip install --upgrade pip
-RUN pip install uvicorn
 RUN pip install mxnet
 RUN pip install pandas
 RUN apt-get update ##[edited]
