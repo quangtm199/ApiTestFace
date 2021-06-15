@@ -1,6 +1,6 @@
 FROM nvidia/cuda:10.0-base-ubuntu16.04
 CMD nvidia-smi
-RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
+RUN apt-get update 
 RUN apt-get install unzip
 RUN apt-get install python3.6
 RUN apt-get install python3-pip
