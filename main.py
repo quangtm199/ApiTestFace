@@ -41,7 +41,12 @@ def read_root():
 @app.post("/predict")
 async def get_predict_image(file: UploadFile = File(...)):
     """Get segmentation maps from image file"""
-    image_predict = get_predict(model,face_detector,await file.read())
-    bytes_io = io.BytesIO()
-    image_predict.save(bytes_io, format="PNG")
-    return Response(bytes_io.getvalue(), media_type="image/png")
+    if (".png" in file.filename) or (".jpg" in file.filename): 
+        image_predict,count = get_predict(model,face_detector,await file.read())
+        if(count==0):
+            return {"Message":"Not found Face"}
+        bytes_io = io.BytesIO()
+        image_predict.save(bytes_io, format="PNG")
+        return Response(bytes_io.getvalue(), media_type="image/png")
+    else:
+        return {"Message":"Input is notImage "}
