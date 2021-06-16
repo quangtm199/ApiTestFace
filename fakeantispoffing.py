@@ -41,6 +41,7 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
         device = torch.device("cpu")
     input_image = Image.open(io.BytesIO(binary_image)).convert('RGB')
     input_image = numpy.array(input_image)
+    input_image_ori=input_image.copy()
     # Convert RGB to BGR
     input_image = input_image[:, :, ::-1].copy()
     (h, w, c) = input_image.shape
@@ -49,7 +50,7 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
     print(device)
     bboxes = mtcnn.detect(image)
     if bboxes is not None:
-        count = 0
+        count = 1
         for i in bboxes:
             lx = max(0,int(i[0]))
             ly = max(0,int(i[1]))
@@ -77,8 +78,8 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
             img = img.to(device)
             map_x, embedding, x_Block1, x_Block2, x_Block3, x_input = model(
                 img)
-            score = torch.sum(map_x)/1024
-            if(score > 0.07):
+            score = torch.sum(map_x)
+            if(score > 120):
                 label = "real"
                 spoofing = 0
             else:
@@ -86,16 +87,18 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
                 spoofing = 1
             if (spoofing == 1):
                 # Neu la fake thi ve mau do
-                cv2.putText(input_image, str(label), (lx, ly - 10),
+                cv2.putText(input_image_ori, str(label), (lx, ly - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                cv2.rectangle(input_image, (lx, ly), (rx, ry),
+                cv2.rectangle(input_image_ori, (lx, ly), (rx, ry),
                               (0, 0, 255), 2)
             else:
                 # Neu real thi ve mau xanh
-                cv2.putText(input_image, str(label), (lx, ly - 10),
+                cv2.putText(input_image_ori, str(label), (lx, ly - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                cv2.rectangle(input_image, (lx, ly), (rx, ry),
+                cv2.rectangle(input_image_ori, (lx, ly), (rx, ry),
                               (0, 255, 0), 2)
+    else:
+        count=0
     # cv2.imwrite("input_image.jpg",input_image)
-    input_image = Image.fromarray(np.uint8(input_image)).convert('RGB')
-    return input_image
+    input_image_ori = Image.fromarray(np.uint8(input_image_ori)).convert('RGB')
+    return input_image_ori,count
