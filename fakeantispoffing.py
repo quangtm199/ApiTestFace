@@ -79,7 +79,7 @@ def get_predict(model, mtcnn, binary_image, max_size=512):
             map_x, embedding, x_Block1, x_Block2, x_Block3, x_input = model(
                 img)
             score = torch.sum(map_x)
-            if(score > 120):
+            if(score > 90):
                 label = "real"
                 spoofing = 0
             else:
